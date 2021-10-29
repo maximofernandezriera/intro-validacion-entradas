@@ -1,97 +1,183 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
+<!doctype html>
+<html lang="en">
 
-    <title>reveal.js</title>
+	<head>
+		<meta charset="utf-8">
 
-    <link rel="stylesheet" href="reveal.js/dist/reset.css" />
-    <link rel="stylesheet" href="reveal.js/dist/reveal.css" />
-    <link rel="stylesheet" href="reveal.js/dist/theme/serif.css" id="theme" />
+		<title>El software</title>
 
-    <!-- Theme used for syntax highlighted code -->
-    <link
-      rel="stylesheet"
-      href="reveal.js/plugin/highlight/monokai.css"
-      id="highlight-theme"
-    />
-  </head>
-  <body>
-    <div class="reveal">
-      <div class="slides">
-        <section
-          data-markdown
-          data-separator="-----"
-          data-separator-vertical="---"
-        >
-          <textarea data-template>
-            # Title Page
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/black.css" id="theme">
 
-            ### Date
+        <link rel="stylesheet" href="../plugin/highlight/black.css">
+	</head>
 
-            -----
-            
-            Vertical slides are separated by `- - -`
-            
-            ---
-            
-            Vertical slides are separated by `- - -` .
-            
-            ---
-            
-            Vertical slides are separated by `- - -` ..
-     
-            -----
-            
-            # title
-            ## skills
-            * one
-            * two
-            * three
-            
-            ## heading
-            8. three
-            1. one
-            1. two
-         
-            
-            -----
-            
+	<body>
 
-            # Questions
+		<div class="reveal">
 
-            -----
+			<div class="slides">
 
-            ## made with
+                <!-- Slides are separated by regexp matching newline + three dashes + newline, vertical slides identical but two dashes -->
+                <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+                    <script type="text/template">
+                        # Fundamentos de software
+                        ## El software, propiedad intelectual, licencias
+                        
+                        ---
+                        
+                        ¿Qué es el software?
 
-            #### [reveal.js](https://github.com/hakimel/reveal.js)
+                        ## Evolución del coste:
+                        * Inicialmente: el hardware era más caro (el software no tenía ningún valor).
+                        * Actualmente: difícil definir cuál es más caro.
+                        
+                        ---                        
+                        
+                        ## Valor del software:
+                        
+                        * ¿Qué es la propiedad intelectual? Por qué es importante para los informáticos?
+                        
+                        ---
+                        
+                        ## Clasificación de software
+                        * El software se clasifica, típicamente, en tres grandes grupos:
+                        
+                        ---
 
-            #### [excalidraw](https://github.com/excalidraw/excalidraw)
+                         1. Software de sistema: sistema operativo, controladores, utilidades básicas,...
+                         2. Software de aplicación: software de propósito específico que permite llevar a cabo una tarea específica.
+                         3. Software de desarrollo
+                        
+                        ---
 
-          </textarea>
-        </section>
-      </div>
-    </div>
+                        A veces se habla de un tercer grupo: el software de desarrollo.
+                        
+                        ---
+                        
+                        * Son todas aquellas herramientas que permiten, gracias a las herramientas del
+                        software de sistema, crear software de aplicación.
 
-    <script src="reveal.js/dist/reveal.js"></script>
-    <script src="reveal.js/plugin/notes/notes.js"></script>
-    <script src="reveal.js/plugin/markdown/markdown.js"></script>
-    <script src="reveal.js/plugin/highlight/highlight.js"></script>
-    <script src="reveal.js/plugin/zoom/zoom.js"></script>
-    <script>
-      // More info about initialization & config:
-      // - https://revealjs.com/initialization/
-      // - https://revealjs.com/config/
-      Reveal.initialize({
-        hash: true,
+                        ---
 
-        // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
-      });
-    </script>
-  </body>
+                        ## Características del software (1)
+
+                        ### El software se desarrolla, no se fabrica.
+
+                        ---
+
+
+                    1. Hardware:
+                        * Un producto diseñado, n copias del producto
+                        * Copias implican: energía, materiales y mano de obra.
+                        * Diseño previo: repercute en el coste de cada copia.
+                        
+                        ---
+
+                    2. Software:
+                        * Producto diseñado, n copias del producto.
+                        * Las copias tienen un coste ínfimo comparado con el original.
+                        * PROCESO IMPORTANTE: PRIMERA COPIA.
+
+                        ---
+
+                        ## Características del software (2)
+
+                        ## El software no se deteriora, queda obsoleto
+                        ▪ Hardware:
+                        Con el tiempo tiene un desgaste: reparaciones y sustituciones.
+
+                        ---
+
+                        ▪ Software:
+                        * Es necesario un mantenimiento: complementos, mejoras, actualizaciones,...
+                        * Inicialmente: muchos errores de desarrollo. A partir de ese momento el programa es válido hasta que quede obsoleto.
+
+                        ---
+
+                        ## Propiedad intelectual
+                        Propiedad: derecho fundamental que ha existido desde la época romana y está recogida en la declaración de DDHH
+                        
+                        ---
+
+                        * Propiedad física, asociada a bienes materiales
+                        
+                        ---
+
+                        ## Propiedad intelectual, asociada a la actividad intelectual
+                        * Protege las manifestaciones de ingenio humano, a favor de sus creadores
+                        
+                        ---
+
+                        * Cada país tiene legislación específica respecto a la propiedad intelectual. En España:
+                        Expira a los 70 años después de la muerte del autor.
+
+                        ---
+
+                        ## ¿Qué protege la Propiedad intelectual?
+                        1. Marcas Registradas
+                        2. Patentes
+                        3. Copyright (Derechos de Autor)
+
+                        ---
+
+                        ## Marcas registradas
+                        1. Símbolo, palabra, número o ilustración.
+                        2. Identifican un producto con su fabricante.
+                        3. Expira a los 10 años, se debe ir renovando
+                        4. No prohíbe que otra empresa pueda fabricar lo mismo producto u ofrecer el mismo servicio
+
+                        ---
+
+                        Se adquieren una serie de derechos:
+                        Uso exclusivo de la marca
+                        Evitar que haya marcas similares
+                        Solicitar la nulidad de marcas similares
+                        Cesión de la marca
+
+                        ---
+                                                                  8
+                        ##Patentes
+
+                        Conjunto de derechos garantizados al inventor de un producto que
+                            pueda ser explotado industrialmente
+                            ▪ Espacio de tiempo limitado, generalmente unos 20 años
+                            ▪ Monopolio de explotación durante este tiempo limitado, ningún otro puede
+                            fabricar, utilizar o vender la invención patentada
+
+                        ---
+
+                        Patentes de software:
+                            ▪ Cualquier programa está formado por millones de componentes, muchos
+                            de ellos pueden ser patentados o incluso estar patentados.
+                            ▪ Monopolis sobre tecnologías
+                            ▪ Vigentes en EEUU y Canadá desde hace tiempo
+                            ▪ Gran controversia en Europa cuando se planteó su aprobación,
+                            excluye expresamente los "programas por ordenador"
+
+                    </script>
+                </section>
+
+            </div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+        <script src="../plugin/markdown/markdown.js"></script>
+        <script src="../plugin/highlight/highlight.js"></script>
+        <script src="../plugin/notes/notes.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+
+		</script>
+
+	</body>
 </html>
