@@ -1,154 +1,131 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>reveal.js - Markdown Example</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css" id="theme">
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+        <link rel="stylesheet" href="../plugin/highlight/monokai.css">
 	</head>
+
 	<body>
+
 		<div class="reveal">
+
 			<div class="slides">
-				<section># ¿Qué es?
 
-Nunca hay que confiar en aquello que introducen los usuarios en un formulario web. Estamos acostumbrados a trabajar con ellos en cualquier aplicación web de hoy en día: Facebook, Twitter, Instagram, ... y realmente no nos damos cuenta de lo fácil que es atacar una web a través de ellos si no se toman las debidas precauciones al validar los datos de entrada.</section>
-				<section>## XSS (Cross-site-scripting)
+                <!-- Use external markdown resource, separate slides by three newlines; vertical slides by two newlines -->
+                <section data-markdown="markdown.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 
-Vamos a crear un formulario (`post.php`) para introducir entradas de posts (es básico porque no se va a guardar nada en la base de datos. Lo único que va a hacer el formulario es mostrar los datos que se han introducido).
+                <!-- Slides are separated by three dashes (the default) -->
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Demo 1
+                        Slide 1
+                        ---
+                        ## Demo 1
+                        Slide 2
+                        ---
+                        ## Demo 1
+                        Slide 3
+                    </script>
+                </section>
 
-```php
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-</head>
-<body>
+                <!-- Slides are separated by regexp matching newline + three dashes + newline, vertical slides identical but two dashes -->
+                <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+                    <script type="text/template">
+                        ## Demo 2
+                        Slide 1.1
 
-<?php
-if ($_SERVER['REQUEST_METHOD'] == "GET") {
-?>
-<p>Nuevo Post</p>
-<form action='post.php' method='post'>
-	<textarea name="textarea" rows="10" cols="50">Escribe algo aquí</textarea>
-	<input type = 'submit' value='enviar'>
-</form>
-<?php
-}else
-	echo $_POST["textarea"] ?? "";
-?>
-</body>
-</html>
-```
+                        --
 
-En principio parece inocuo. Para probar escribe unos cuantos posts.
+                        ## Demo 2
+                        Slide 1.2
 
-![Post](/Ciberseguridad-PePS/assets/img/validacion/image-20210131193642983.png)
+                        ---
 
-Pero ahora vas a actuar como un hacker y a introducir el siguiente texto 
+                        ## Demo 2
+                        Slide 2
+                    </script>
+                </section>
 
-```html
-<script>alert('hackeado')</script>
-```
+                <!-- No "extra" slides, since the separator can't be matched ("---" will become horizontal rulers) -->
+                <section data-markdown data-separator="$x">
+                    <script type="text/template">
+                        A
 
-Ahora ya no parece tan inocuo, ¿no?
+                        ---
 
-![Formulario hackeado](image-20210131193815141.png)
-</section>
-<section
-### Mitigar XSS
+                        B
 
-**En el servidor**
+                        ---
 
-Como se ha comentado antes, **nunca pero nunca** se ha de confiar en lo que escriben los usuarios en los formularios. Siempre hay que sanear (**sanitize**) de caracteres peligrosos mediante las funciones que provea el lenguaje en el que escribimos la parte del servidor (o la parte cliente que siempre es javascript).
+                        C
+                    </script>
+                </section>
 
-Para ello podemos usar en PHP la función `htmlspecialchars` o `htmlentities`, aunque mejor si usamos un purificador como por ejemplo [http://htmlpurifier.org/](http://htmlpurifier.org/)
+                <!-- Slide attributes -->
+                <section data-markdown>
+                    <script type="text/template">
+                        <!-- .slide: data-background="#000000" -->
+                        ## Slide attributes
+                    </script>
+                </section>
 
-Vamos a crear un nuevo archivo llamado `post_mejorado.php` que realiza el escape de los caracteres peligrosos.
+                <!-- Element attributes -->
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Element attributes
+                        - Item 1 <!-- .element: class="fragment" data-fragment-index="2" -->
+                        - Item 2 <!-- .element: class="fragment" data-fragment-index="1" -->
+                    </script>
+                </section>
 
-```php
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-</head>
-<body>
+                <!-- Code -->
+                <section data-markdown>
+                    <script type="text/template">
+                        ```php [1|3-5]
+                        public function foo()
+                        {
+                            $foo = array(
+                                'bar' => 'bar'
+                            )
+                        }
+                        ```
+                    </script>
+                </section>
 
-<?php
-if ($_SERVER['REQUEST_METHOD'] == "GET") {
-?>
-<p>Nuevo Post</p>
-<form action='post.php' method='post'>
-	<textarea name="textarea" rows="10" cols="50">Escribe algo aquí</textarea>
-	<input type = 'submit' value='enviar'>
-</form>
-<?php
-}else
-	echo htmlspecialchars($_POST["textarea"]) ?? "";
-?>
-</html>
-```
+                <!-- Images -->
+                <section data-markdown>
+                    <script type="text/template">
+                        ![Sample image](https://s3.amazonaws.com/static.slid.es/logo/v2/slides-symbol-512x512.png)
+                    </script>
+                </section>
 
- Ahora fíjate que al introducir 
-
-```html
-<script>alert('hackeado')</script>
-```
-
-lo único que ocurre es que se muestra en pantalla lo siguiente:
-
-![Hackeo mitigado](/Ciberseguridad-PePS/assets/img/validacion/image-20210131195056822.png)
-
-**En el cliente**
-
-Mejor aún, si también usamos un purificador como [DOMPurify](https://github.com/cure53/DOMPurify) en la parte del cliente, pues según la información disponible en la página de Gitub:
-
-> DOMPurify sanitizes HTML and prevents XSS attacks. You can feed  DOMPurify with string full of dirty HTML and it will return a string  (unless configured otherwise) with clean HTML. DOMPurify will strip out  everything that contains dangerous HTML and thereby prevent XSS attacks  and other nastiness. It's also damn bloody fast. We use the technologies the browser provides and turn them into an XSS filter. The faster your  browser, the faster DOMPurify will be.
-
-Además, nos hemos de asegurar de que cuando insertamos datos en el DOM, estos se traten como un `String` y no como `DOM`. Por ejemplo:
-
-* Menos seguro
-
-```javascript
-const cadena = '<strong>Texto en javascrit</strong>';
-const div = document.querySelector('#comentario');
-div.innerHTML = cadena; //Se interpreta como DOM
-```
-
-* Más seguro
-
-```javascript
-const cadena = '<strong>Texto en javascrit</strong>';
-const div = document.querySelector('#comentario');
-div.innerText = cadena; //Se interpreta como cadena
-```
-
-**Mediante CSP**
-
-</section>
-			</div>
+            </div>
 		</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+		<script src="../dist/reveal.js"></script>
+        <script src="../plugin/markdown/markdown.js"></script>
+        <script src="../plugin/highlight/highlight.js"></script>
+        <script src="../plugin/notes/notes.js"></script>
 
-				// Learn about plugins: https://revealjs.com/plugins/
+		<script>
+
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
+
 		</script>
+
 	</body>
 </html>
