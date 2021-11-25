@@ -1,9 +1,9 @@
-# ¿Qué es?
+# VALIDACIÓN DE ENTRADAS
 
-> **Práctica**
-> Realiza y documenta todos los puntos de esta entrada de blog 
-> Debes crear todas las páginas mencionadas en el mismo y como resultado, debes crear un Dockerfile con dos instalaciones de apache y php: una para el atacante y otra para el hacker
-> Además, debes crear un repositorio en GitHub con un commit por cada nuevo archivo crees o modifiques
+> **Práctica 1**
+> Realiza y documenta todos los puntos.
+> Debes crear todas las páginas mencionadas en el mismo y como resultado, debes crear un Dockerfile las instalaciones de apache y php.
+> Además, debes crear un repositorio en GitHub con un commit por cada nuevo archivo crees o modifiques.
 
 
 
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
 En principio parece inocuo. Para probar escribe unos cuantos posts.
 
-![Post](/Ciberseguridad-PePS/assets/img/validacion/image-20210131193642983.png)
+![Post](image-20210131193642983.png)
 
 Pero ahora vas a actuar como un hacker y a introducir el siguiente texto 
 
@@ -49,7 +49,7 @@ Pero ahora vas a actuar como un hacker y a introducir el siguiente texto
 
 Ahora ya no parece tan inocuo, ¿no?
 
-![Formulario hackeado](/Ciberseguridad-PePS/assets/img/validacion/image-20210131193815141.png)
+![Formulario hackeado](image-20210131193815141.png)
 
 ### Mitigar XSS
 
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
 lo único que ocurre es que se muestra en pantalla lo siguiente:
 
-![Hackeo mitigado](/Ciberseguridad-PePS/assets/img/validacion/image-20210131195056822.png)
+![Hackeo mitigado](image-20210131195056822.png)
 
 **En el cliente**
 
