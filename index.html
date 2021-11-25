@@ -26,120 +26,119 @@
                         
                         ---
                         
-                        ¿Qué es el software?
+                        # ¿Qué es?
 
-                        ## Evolución del coste:
-                        * Inicialmente: el hardware era más caro (el software no tenía ningún valor).
-                        * Actualmente: difícil definir cuál es más caro.
-                        
-                        ---                        
-                        
-                        ## Valor del software:
-                        
-                        * ¿Qué es la propiedad intelectual? Por qué es importante para los informáticos?
-                        
-                        ---
-                        
-                        ## Clasificación de software
-                        * El software se clasifica, típicamente, en tres grandes grupos:
-                        
-                        ---
+Nunca hay que confiar en aquello que introducen los usuarios en un formulario web. Estamos acostumbrados a trabajar con ellos en cualquier aplicación web de hoy en día: Facebook, Twitter, Instagram, ... y realmente no nos damos cuenta de lo fácil que es atacar una web a través de ellos si no se toman las debidas precauciones al validar los datos de entrada.
 
-                         1. Software de sistema: sistema operativo, controladores, utilidades básicas,...
-                         2. Software de aplicación: software de propósito específico que permite llevar a cabo una tarea específica.
-                         3. Software de desarrollo
-                        
-                        ---
+## XSS (Cross-site-scripting)
 
-                        A veces se habla de un tercer grupo: el software de desarrollo.
-                        
-                        ---
-                        
-                        * Son todas aquellas herramientas que permiten, gracias a las herramientas del
-                        software de sistema, crear software de aplicación.
+Vamos a crear un formulario (`post.php`) para introducir entradas de posts (es básico porque no se va a guardar nada en la base de datos. Lo único que va a hacer el formulario es mostrar los datos que se han introducido).
 
-                        ---
+```php
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
 
-                        ## Características del software (1)
+<?php
+if ($_SERVER['REQUEST_METHOD'] == "GET") {
+?>
+<p>Nuevo Post</p>
+<form action='post.php' method='post'>
+	<textarea name="textarea" rows="10" cols="50">Escribe algo aquí</textarea>
+	<input type = 'submit' value='enviar'>
+</form>
+<?php
+}else
+	echo $_POST["textarea"] ?? "";
+?>
+</body>
+</html>
+```
 
-                        ### El software se desarrolla, no se fabrica.
+En principio parece inocuo. Para probar escribe unos cuantos posts.
 
-                        ---
+![Post](/Ciberseguridad-PePS/assets/img/validacion/image-20210131193642983.png)
 
+Pero ahora vas a actuar como un hacker y a introducir el siguiente texto 
 
-                    1. Hardware:
-                        * Un producto diseñado, n copias del producto
-                        * Copias implican: energía, materiales y mano de obra.
-                        * Diseño previo: repercute en el coste de cada copia.
-                        
-                        ---
+```html
+<script>alert('hackeado')</script>
+```
 
-                    2. Software:
-                        * Producto diseñado, n copias del producto.
-                        * Las copias tienen un coste ínfimo comparado con el original.
-                        * PROCESO IMPORTANTE: PRIMERA COPIA.
+Ahora ya no parece tan inocuo, ¿no?
 
-                        ---
+![Formulario hackeado](/Ciberseguridad-PePS/assets/img/validacion/image-20210131193815141.png)
 
-                        ## Características del software (2)
+### Mitigar XSS
 
-                        ## El software no se deteriora, queda obsoleto
-                        ▪ Hardware:
-                        Con el tiempo tiene un desgaste: reparaciones y sustituciones.
+**En el servidor**
 
-                        ---
+Como se ha comentado antes, **nunca pero nunca** se ha de confiar en lo que escriben los usuarios en los formularios. Siempre hay que sanear (**sanitize**) de caracteres peligrosos mediante las funciones que provea el lenguaje en el que escribimos la parte del servidor (o la parte cliente que siempre es javascript).
 
-                        ▪ Software:
-                        * Es necesario un mantenimiento: complementos, mejoras, actualizaciones,...
-                        * Inicialmente: muchos errores de desarrollo. A partir de ese momento el programa es válido hasta que quede obsoleto.
+Para ello podemos usar en PHP la función `htmlspecialchars` o `htmlentities`, aunque mejor si usamos un purificador como por ejemplo [http://htmlpurifier.org/](http://htmlpurifier.org/)
 
-                        ---
+Vamos a crear un nuevo archivo llamado `post_mejorado.php` que realiza el escape de los caracteres peligrosos.
 
-                        ## Propiedad intelectual
-                        Propiedad: derecho fundamental que ha existido desde la época romana y está recogida en la declaración de DDHH
-                        
-                        ---
+```php
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
 
-                        * Propiedad física, asociada a bienes materiales
-                        
-                        ---
+<?php
+if ($_SERVER['REQUEST_METHOD'] == "GET") {
+?>
+<p>Nuevo Post</p>
+<form action='post.php' method='post'>
+	<textarea name="textarea" rows="10" cols="50">Escribe algo aquí</textarea>
+	<input type = 'submit' value='enviar'>
+</form>
+<?php
+}else
+	echo htmlspecialchars($_POST["textarea"]) ?? "";
+?>
+</html>
+```
 
-                        ## Propiedad intelectual, asociada a la actividad intelectual
-                        * Protege las manifestaciones de ingenio humano, a favor de sus creadores
-                        
-                        ---
+ Ahora fíjate que al introducir 
 
-                        * Cada país tiene legislación específica respecto a la propiedad intelectual. En España:
-                        Expira a los 70 años después de la muerte del autor.
+```html
+<script>alert('hackeado')</script>
+```
 
-                        ---
+lo único que ocurre es que se muestra en pantalla lo siguiente:
 
-                        ## ¿Qué protege la Propiedad intelectual?
-                        1. Marcas Registradas
-                        2. Patentes
-                        3. Copyright (Derechos de Autor)
+![Hackeo mitigado](/Ciberseguridad-PePS/assets/img/validacion/image-20210131195056822.png)
 
-                        ---
+**En el cliente**
 
-                        ## Marcas registradas
-                        1. Símbolo, palabra, número o ilustración.
-                        2. Identifican un producto con su fabricante.
-                        3. Expira a los 10 años, se debe ir renovando
-                        4. No prohíbe que otra empresa pueda fabricar lo mismo producto u ofrecer el mismo servicio
+Mejor aún, si también usamos un purificador como [DOMPurify](https://github.com/cure53/DOMPurify) en la parte del cliente, pues según la información disponible en la página de Gitub:
 
-                        ---
+> DOMPurify sanitizes HTML and prevents XSS attacks. You can feed  DOMPurify with string full of dirty HTML and it will return a string  (unless configured otherwise) with clean HTML. DOMPurify will strip out  everything that contains dangerous HTML and thereby prevent XSS attacks  and other nastiness. It's also damn bloody fast. We use the technologies the browser provides and turn them into an XSS filter. The faster your  browser, the faster DOMPurify will be.
 
-                        ## Se adquieren una serie de derechos:
-                        * Uso exclusivo de la marca
-                        * Evitar que haya marcas similares
-                        * Solicitar la nulidad de marcas similares
-                        * Cesión de la marca
+Además, nos hemos de asegurar de que cuando insertamos datos en el DOM, estos se traten como un `String` y no como `DOM`. Por ejemplo:
 
-                        ---
+* Menos seguro
 
-                        ## Patentes
+```javascript
+const cadena = '<strong>Texto en javascrit</strong>';
+const div = document.querySelector('#comentario');
+div.innerHTML = cadena; //Se interpreta como DOM
+```
 
-                        Conjunto de derechos garantizados al inventor de un producto que pueda ser explotado industrialmente
+* Más seguro
+
+```javascript
+const cadena = '<strong>Texto en javascrit</strong>';
+const div = document.querySelector('#comentario');
+div.innerText = cadena; //Se interpreta como cadena
+```
+
 
                  
                     </script>
