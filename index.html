@@ -1,43 +1,25 @@
 <!doctype html>
-<html lang="en">
-
+<html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>El software</title>
+		<title>reveal.js</title>
 
-		<link rel="stylesheet" href="reveal.js/dist/reveal.css">
-		<link rel="stylesheet" href="reveal.js/dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
 
-        <link rel="stylesheet" href="reveal.js/plugin/highlight/black.css">
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
 	</head>
-
 	<body>
-
 		<div class="reveal">
-
 			<div class="slides">
+				<section># ¿Qué es?
 
-                <!-- Slides are separated by regexp matching newline + three dashes + newline, vertical slides identical but two dashes -->
-               				
-				        <section
-          data-markdown
-          data-separator="-----"
-          data-separator-vertical="---"
-        >
-          <textarea data-template>
-           # ¿Qué es?
-
-> **Práctica**
-> Realiza y documenta todos los puntos de esta entrada de blog 
-> Debes crear todas las páginas mencionadas en el mismo y como resultado, debes crear un Dockerfile con dos instalaciones de apache y php: una para el atacante y otra para el hacker
-> Además, debes crear un repositorio en GitHub con un commit por cada nuevo archivo crees o modifiques
-
-
-
-Nunca hay que confiar en aquello que introducen los usuarios en un formulario web. Estamos acostumbrados a trabajar con ellos en cualquier aplicación web de hoy en día: Facebook, Twitter, Instagram, ... y realmente no nos damos cuenta de lo fácil que es atacar una web a través de ellos si no se toman las debidas precauciones al validar los datos de entrada.
-
-## XSS (Cross-site-scripting)
+Nunca hay que confiar en aquello que introducen los usuarios en un formulario web. Estamos acostumbrados a trabajar con ellos en cualquier aplicación web de hoy en día: Facebook, Twitter, Instagram, ... y realmente no nos damos cuenta de lo fácil que es atacar una web a través de ellos si no se toman las debidas precauciones al validar los datos de entrada.</section>
+				<section>## XSS (Cross-site-scripting)
 
 Vamos a crear un formulario (`post.php`) para introducir entradas de posts (es básico porque no se va a guardar nada en la base de datos. Lo único que va a hacer el formulario es mostrar los datos que se han introducido).
 
@@ -77,8 +59,9 @@ Pero ahora vas a actuar como un hacker y a introducir el siguiente texto
 
 Ahora ya no parece tan inocuo, ¿no?
 
-![Formulario hackeado](/Ciberseguridad-PePS/assets/img/validacion/image-20210131193815141.png)
-
+![Formulario hackeado](image-20210131193815141.png)
+</section>
+<section
 ### Mitigar XSS
 
 **En el servidor**
@@ -145,30 +128,27 @@ const cadena = '<strong>Texto en javascrit</strong>';
 const div = document.querySelector('#comentario');
 div.innerText = cadena; //Se interpreta como cadena
 ```
-	  
-          </textarea>
-        </section>
 
-            </div>
+**Mediante CSP**
+
+</section>
+			</div>
 		</div>
 
-		<script src="reveal.js/dist/reveal.js"></script>
-        <script src="reveal.js/plugin/markdown/markdown.js"></script>
-        <script src="reveal.js/plugin/highlight/highlight.js"></script>
-        <script src="reveal.js/plugin/notes/notes.js"></script>
-
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
 		<script>
-
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
 			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+				hash: true,
 
+				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
-
 		</script>
-
 	</body>
 </html>
